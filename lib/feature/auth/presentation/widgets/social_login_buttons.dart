@@ -13,44 +13,58 @@ class SocialLoginButtons extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Expanded(child: Divider(color: AppColors.border)),
+            Expanded(
+              child: Container(
+                height: 1,
+                color: AppColors.border,
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
                 'O CONTINÚA CON',
                 style: TextStyle(
-                  color: Colors.grey[600],
+                  color: AppColors.textSecondary,
                   fontSize: 11,
-                  fontWeight: FontWeight.w500,
+                  fontWeight: FontWeight.w600,
                   letterSpacing: 1.5,
                 ),
               ),
             ),
-            const Expanded(child: Divider(color: AppColors.border)),
+            Expanded(
+              child: Container(
+                height: 1,
+                color: AppColors.border,
+              ),
+            ),
           ],
         ),
         const SizedBox(height: 24),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _SocialButton(
-              icon: Icons.apple,
-              label: 'Apple',
-              onPressed: () => context.read<LoginBloc>().add(LoginWithApplePressed()),
+            Expanded(
+              child: _SocialButton(
+                icon: Icons.apple,
+                label: 'Apple',
+                onPressed: () => context.read<LoginBloc>().add(LoginWithApplePressed()),
+              ),
             ),
-            const SizedBox(width: 16),
-            _SocialButton(
-              icon: Icons.g_mobiledata,
-              label: 'Google',
-              iconColor: const Color(0xFFEA4335),
-              onPressed: () => context.read<LoginBloc>().add(LoginWithGooglePressed()),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _SocialButton(
+                icon: Icons.g_mobiledata,
+                label: 'Google',
+                onPressed: () => context.read<LoginBloc>().add(LoginWithGooglePressed()),
+              ),
             ),
-            const SizedBox(width: 16),
-            _SocialButton(
-              icon: Icons.facebook,
-              label: 'Facebook',
-              iconColor: const Color(0xFF1877F2),
-              onPressed: () => context.read<LoginBloc>().add(LoginWithFacebookPressed()),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _SocialButton(
+                icon: Icons.facebook,
+                label: 'Facebook',
+                iconColor: const Color(0xFF1877F2),
+                onPressed: () => context.read<LoginBloc>().add(LoginWithFacebookPressed()),
+              ),
             ),
           ],
         ),
@@ -74,20 +88,20 @@ class _SocialButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Tooltip(
-      message: label,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(14),
-        child: Container(
-          width: 72,
-          height: 52,
-          decoration: BoxDecoration(
-            color: AppColors.surface,
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: AppColors.border),
-          ),
-          child: Icon(icon, color: iconColor, size: 26),
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        height: 56,
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: AppColors.border),
+        ),
+        child: Icon(
+          icon,
+          color: iconColor,
+          size: 28,
         ),
       ),
     );

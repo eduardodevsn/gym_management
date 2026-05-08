@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:gym_management/feature/auth/domain/entities/auth_token.dart';
 import 'package:gym_management/feature/auth/domain/entities/user.dart';
 
@@ -20,7 +20,7 @@ abstract class AuthRemoteDataSource {
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
-  final Dio client;
+  final http.Client client;
 
   const AuthRemoteDataSourceImpl({required this.client});
 
@@ -29,6 +29,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     required String email,
     required String password,
   }) {
+    // TODO: Implementar cuando tengas el backend
     throw UnimplementedError('loginWithEmail not implemented');
   }
 

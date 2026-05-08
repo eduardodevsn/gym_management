@@ -13,13 +13,11 @@ import '../usecases/login_with_email_usecase.dart';
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
-  // Core
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => const FlutterSecureStorage());
   sl.registerLazySingleton(() => http.Client());
   
-  // Data sources
   sl.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSourceImpl(client: sl()),
   );
@@ -30,7 +28,6 @@ Future<void> initDependencies() async {
     ),
   );
   
-  // Repositories
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       remoteDataSource: sl(),
@@ -38,12 +35,10 @@ Future<void> initDependencies() async {
     ),
   );
   
-  // Use cases
   sl.registerLazySingleton(
     () => LoginWithEmailUseCase(sl()),
   );
   
-  // BLoCs
   sl.registerFactory(
     () => LoginBloc(
       loginUseCase: sl(),

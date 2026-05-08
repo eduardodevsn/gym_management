@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gym_management/core/themes/app_colors.dart';
 import 'package:gym_management/feature/auth/presentation/widgets/remember_me_row.dart';
 import '../bloc/login/login_bloc.dart';
 import '../bloc/login/login_event.dart';
 import '../bloc/login/login_state.dart';
 import 'email_input_field.dart';
 import 'password_input_field.dart';
+import 'user_type_tabs.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -16,73 +18,98 @@ class LoginForm extends StatelessWidget {
       listenWhen: (previous, current) => current is LoginSuccess || current is LoginError,
       listener: (context, state) {
         if (state is LoginSuccess) {
-          // Navegar a Home
           Navigator.of(context).pushReplacementNamed('/home');
         } else if (state is LoginError) {
-          // Mostrar SnackBar con error
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: AppColors.primary,
               duration: const Duration(seconds: 3),
             ),
           );
         }
       },
       builder: (context, state) {
-
         final isLoading = state is LoginLoading;
         
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Campo Email
+            const UserTypeTabs(),
+            
+            const SizedBox(height: 24),
+            
             const EmailInputField(),
             
             const SizedBox(height: 16),
             
-            // Campo Contraseña
             const PasswordInputField(),
             
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
             
-            // Recordarme y Olvidó contraseña
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const RememberMeCheckbox(),
+                const Spacer(),
                 TextButton(
                   onPressed: isLoading ? null : () {
-                    // Navegar a recuperar contraseña
                     Navigator.of(context).pushNamed('/forgot-password');
                   },
-                  child: const Text('¿Olvidaste tu contraseña?'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: AppColors.primary,
+                    padding: EdgeInsets.zero,
+                    minimumSize: Size.zero,
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: const Text(
+                    '¿Olvidaste tu contraseña?',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ],
             ),
             
-            const SizedBox(height: 24),
+            const SizedBox(height: 28),
             
-            // Botón Iniciar Sesión
             ElevatedButton(
               onPressed: isLoading || (state is LoginValidationState && !state.isFormValid)
                   ? null
                   : () => context.read<LoginBloc>().add(LoginSubmitted()),
               style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                backgroundColor: AppColors.primary,
+                disabledBackgroundColor: AppColors.primary.withOpacity(0.5),
+                padding: const EdgeInsets.symmetric(vertical: 18),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
+                elevation: 0,
               ),
               child: isLoading
                   ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
+                      height: 22,
+                      width: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        color: Colors.white,
+                      ),
                     )
-                  : const Text(
-                      'INICIAR SESIÓN',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.login, size: 20),
+                        SizedBox(width: 10),
+                        Text(
+                          'INICIAR SESIÓN',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ],
                     ),
             ),
           ],

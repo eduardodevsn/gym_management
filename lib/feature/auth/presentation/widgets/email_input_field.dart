@@ -21,7 +21,36 @@ class EmailInputField extends StatelessWidget {
         final errorText = state is LoginValidationState ? state.emailError : null;
         return TextFormField(
           style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
-          decoration: _decoration('Email', 'usuario@ejemplo.com', Icons.email_outlined, errorText),
+          decoration: InputDecoration(
+            hintText: 'Email',
+            hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 14),
+            prefixIcon: const Icon(
+              Icons.email_outlined,
+              color: AppColors.textSecondary,
+              size: 20,
+            ),
+            errorText: errorText,
+            errorStyle: const TextStyle(color: AppColors.primary, fontSize: 12),
+            filled: true,
+            fillColor: AppColors.surface,
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.border, width: 1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
+            ),
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+          ),
           keyboardType: TextInputType.emailAddress,
           textInputAction: TextInputAction.next,
           onChanged: (v) => context.read<LoginBloc>().add(LoginEmailChanged(v)),
@@ -29,40 +58,4 @@ class EmailInputField extends StatelessWidget {
       },
     );
   }
-}
-
-InputDecoration _decoration(
-  String label,
-  String hint,
-  IconData icon,
-  String? errorText,
-) {
-  return InputDecoration(
-    labelText: label,
-    labelStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
-    hintText: hint,
-    hintStyle: const TextStyle(color: AppColors.textHint),
-    prefixIcon: Icon(icon, color: AppColors.textSecondary, size: 20),
-    errorText: errorText,
-    errorStyle: const TextStyle(color: AppColors.primary),
-    filled: true,
-    fillColor: AppColors.surface,
-    enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: AppColors.border),
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
-    ),
-    errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: AppColors.primary),
-    ),
-    focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
-      borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
-    ),
-    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-  );
 }

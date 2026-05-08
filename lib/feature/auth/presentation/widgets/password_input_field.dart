@@ -30,11 +30,13 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
           obscureText: _obscure,
           style: const TextStyle(color: AppColors.textPrimary, fontSize: 15),
           decoration: InputDecoration(
-            labelText: 'Contraseña',
-            labelStyle: const TextStyle(color: AppColors.textSecondary, fontSize: 14),
-            hintText: '••••••••',
-            hintStyle: const TextStyle(color: AppColors.textHint),
-            prefixIcon: const Icon(Icons.lock_outline, color: AppColors.textSecondary, size: 20),
+            hintText: 'Contraseña',
+            hintStyle: const TextStyle(color: AppColors.textHint, fontSize: 14),
+            prefixIcon: const Icon(
+              Icons.lock_outline,
+              color: AppColors.textSecondary,
+              size: 20,
+            ),
             suffixIcon: IconButton(
               icon: Icon(
                 _obscure ? Icons.visibility_off_outlined : Icons.visibility_outlined,
@@ -42,14 +44,15 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
                 size: 20,
               ),
               onPressed: () => setState(() => _obscure = !_obscure),
+              splashRadius: 20,
             ),
             errorText: errorText,
-            errorStyle: const TextStyle(color: AppColors.primary),
+            errorStyle: const TextStyle(color: AppColors.primary, fontSize: 12),
             filled: true,
             fillColor: AppColors.surface,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.border),
+              borderSide: const BorderSide(color: AppColors.border, width: 1),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -57,7 +60,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: AppColors.primary),
+              borderSide: const BorderSide(color: AppColors.primary, width: 1),
             ),
             focusedErrorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),

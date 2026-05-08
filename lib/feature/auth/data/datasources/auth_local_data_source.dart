@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gym_management/feature/auth/domain/entities/auth_token.dart';
 
 abstract class AuthLocalDataSource {
@@ -11,8 +12,12 @@ abstract class AuthLocalDataSource {
 
 class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   final FlutterSecureStorage secureStorage;
+  final SharedPreferences sharedPreferences;
 
-  const AuthLocalDataSourceImpl({required this.secureStorage, required Object sharedPreferences});
+  const AuthLocalDataSourceImpl({
+    required this.secureStorage,
+    required this.sharedPreferences,
+  });
 
   static const _keyRememberMe = 'remember_me';
   static const _keyAccessToken = 'access_token';
@@ -20,13 +25,13 @@ class AuthLocalDataSourceImpl implements AuthLocalDataSource {
   static const _keyExpiresAt = 'expires_at';
 
   @override
-  Future<void> setRememberMe(bool value) =>
-      secureStorage.write(key: _keyRememberMe, value: value.toString());
+  Future<void> setRememberMe(bool value) async {
+    await sharedPreferences.setBool(_keyRememberMe, value);
+  }
 
   @override
   Future<bool> getRememberMe() async {
-    final value = await secureStorage.read(key: _keyRememberMe);
-    return value == 'true';
+    return sharedPreferences.getBool(_keyRememberMe) ?? false;
   }
 
   @override
